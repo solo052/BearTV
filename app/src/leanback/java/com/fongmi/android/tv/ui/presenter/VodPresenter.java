@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.leanback.widget.Presenter;
 
+import com.fongmi.android.tv.Product;
 import com.fongmi.android.tv.bean.Vod;
 import com.fongmi.android.tv.databinding.AdapterVodBinding;
 import com.fongmi.android.tv.utils.ImgUtil;
@@ -29,9 +30,9 @@ public class VodPresenter extends Presenter {
     }
 
     private void setLayoutSize() {
-        int space = ResUtil.dp2px(112);
+        int space = ResUtil.dp2px(48) + ResUtil.dp2px(16 * (Product.getColumn() - 1));
         int base = ResUtil.getScreenWidthPx() - space;
-        width = base / 5;
+        width = base / Product.getColumn();
         height = (int) (width / 0.75f);
     }
 
@@ -54,9 +55,9 @@ public class VodPresenter extends Presenter {
         holder.binding.site.setVisibility(item.getSiteVisible());
         holder.binding.year.setVisibility(item.getYearVisible());
         holder.binding.remark.setVisibility(item.getRemarkVisible());
-        ImgUtil.load(item.getVodName(), item.getVodPic(), holder.binding.image);
         setOnClickListener(holder, view -> mListener.onItemClick(item));
         holder.view.setOnLongClickListener(v -> mListener.onLongClick(item));
+        ImgUtil.load(item.getVodPic(), holder.binding.image);
     }
 
     @Override
